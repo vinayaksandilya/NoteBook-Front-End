@@ -116,39 +116,37 @@ export default function MyCoursesPage() {
       ) : (
         <Card className="mt-4">
           <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Created Date</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Title</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Created Date</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {courses.map((course) => (
+                  <TableRow key={course.id}>
+                    <TableCell className="font-medium max-w-xs truncate">{course.title}</TableCell>
+                    <TableCell className="text-sm text-muted-foreground max-w-md truncate">
+                      {course.description}
+                    </TableCell>
+                    <TableCell>{format(new Date(course.created_at), "PPp")}</TableCell>
+                    <TableCell className="text-right">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => router.push(`/dashboard/courses/${course.id}`)}
+                      >
+                        View Details
+                      </Button>
+                      {/* Add other actions like Edit, Delete if applicable */}
+                    </TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {courses.map((course) => (
-                    <TableRow key={course.id}>
-                      <TableCell className="font-medium max-w-xs truncate whitespace-nowrap">{course.title}</TableCell>
-                      <TableCell className="text-sm text-muted-foreground max-w-md truncate whitespace-nowrap">
-                        {course.description}
-                      </TableCell>
-                      <TableCell className="whitespace-nowrap">{format(new Date(course.created_at), "PPp")}</TableCell>
-                      <TableCell className="text-right whitespace-nowrap">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => router.push(`/dashboard/courses/${course.id}`)}
-                        >
-                          View Details
-                        </Button>
-                        {/* Add other actions like Edit, Delete if applicable */}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                ))}
+              </TableBody>
+            </Table>
           </CardContent>
         </Card>
       )}

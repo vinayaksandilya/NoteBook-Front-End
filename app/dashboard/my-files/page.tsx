@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
-import { api } from "@/lib/api" // Import API_BASE_URL
+import { api, API_BASE_URL } from "@/lib/api" // Import API_BASE_URL
 import { useAuth } from "@/contexts/auth-context"
 
 interface FileItem {
@@ -32,7 +32,6 @@ interface FileItem {
   size: number
   mime_type: string // Changed from type
   path: string // Added for download link
-  url: string // Add this line
 }
 
 export default function MyFilesPage() {
@@ -235,9 +234,14 @@ export default function MyFilesPage() {
                     <TableCell>{format(new Date(file.created_at), "PPp")}</TableCell>
                     <TableCell>{formatFileSize(file.size)}</TableCell>
                     <TableCell className="text-right">
-                      {file.url && (
+                      {file.path && (
                         <Button variant="ghost" size="icon" asChild>
-                          <a href={file.url} target="_blank" rel="noopener noreferrer" title="View/Download File">
+                          <a
+                            href={`${API_BASE_URL}${file.path}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="View/Download File"
+                          >
                             <Download className="h-4 w-4" />
                           </a>
                         </Button>
